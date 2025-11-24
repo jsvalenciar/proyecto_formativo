@@ -1,3 +1,11 @@
+/* Forzar mismo ancho en inputs y botón de login */
+.login-form .input-group input,
+.login-form .login-btn {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
+}
 /* Estilos modernos y dinámicos para Login */
 .login-wrapper {
   margin: 0;
@@ -163,6 +171,7 @@
 }
 
 /* Grupo de input */
+
 .input-group {
   position: relative;
   margin-bottom: 20px;
@@ -170,7 +179,7 @@
 
 .input-group input {
   width: 100%;
-  padding: 15px 20px;
+  padding: 15px 36px 15px 12px; /* padding-right aumentado para el icono */
   background: rgba(255, 255, 255, 0.8);
   border: 2px solid rgba(102, 126, 234, 0.2);
   border-radius: 12px;
@@ -192,7 +201,7 @@
 
 .input-group .icon {
   position: absolute;
-  right: 20px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: #667eea;

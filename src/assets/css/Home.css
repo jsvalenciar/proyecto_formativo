@@ -1,3 +1,15 @@
+/* Botón "Inicio" siempre azul, sin hover */
+.nav-link.home {
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+.nav-link.home:hover,
+.nav-link.home:focus {
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  color: #fff !important;
+}
 /* Estilos modernos y dinámicos para la página Home */
 body {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -65,17 +77,33 @@ body {
   background: linear-gradient(135deg, #667eea, #764ba2);
   color: white;
   transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px lch(55.77% 61.68 291.39 / 0.3);
 }
 
 .nav-link.logout {
-  border-color: #e74c3c;
-  color: #e74c3c;
+  border-color: #3c3fe7;
+  color: #261c81;
 }
 
 .nav-link.logout:hover {
   background: #e74c3c;
   color: white;
+}
+
+/* Mantener el primer enlace de la barra de navegación (Inicio) marcado en azul
+   y desactivar su interacción hover visual. No afecta a otros enlaces. */
+.nav-links .nav-link:first-child {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+.nav-links .nav-link:first-child:hover {
+  /* Mantener el mismo estilo al pasar el cursor */
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  transform: none;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 body::before {
@@ -108,7 +136,7 @@ body::before {
 /* Hero Section */
 .hero-section {
   /* Espacio contenido: reducimos padding inferior para eliminar gran área vacía */
-  padding: 40px 20px 40px;
+  padding: 80px 20px 40px;
   text-align: center;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   position: relative;
@@ -300,7 +328,7 @@ a {
 }
 
 a:visited {
-  color: inherit;
+  color: white;
 }
 
 .back-link {

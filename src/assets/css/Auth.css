@@ -1,46 +1,19 @@
-/* Estilos modernos y dinámicos para Register */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: auto;
-}
+/* Auth.css: Unificación de estilos para Login y Register */
 
-body::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="15" cy="15" r="1.2" fill="rgba(255,255,255,0.1)"/><circle cx="85" cy="85" r="1.2" fill="rgba(255,255,255,0.1)"/><circle cx="45" cy="25" r="0.8" fill="rgba(255,255,255,0.1)"/><circle cx="25" cy="75" r="0.6" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="35" r="0.9" fill="rgba(255,255,255,0.1)"/><circle cx="55" cy="65" r="0.7" fill="rgba(255,255,255,0.1)"/></svg>');
-  animation: particleFloat 18s ease-in-out infinite;
-}
-
-@keyframes particleFloat {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  25% { transform: translateY(-8px) rotate(90deg); }
-  50% { transform: translateY(4px) rotate(180deg); }
-  75% { transform: translateY(-6px) rotate(270deg); }
-}
-
-/* Wrapper para centrar */
-.register-wrapper {
+/* Wrapper y contenedores */
+.auth-wrapper, .login-wrapper, .register-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   position: relative;
   z-index: 1;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Contenedor principal */
-.register-container {
+.auth-container, .login-container, .register-container {
   display: flex;
   width: 100%;
   height: 100vh;
@@ -49,11 +22,11 @@ body::before {
   overflow: hidden;
   backdrop-filter: none;
   border: none;
-  animation: containerSlideIn 1.2s ease-out;
+  animation: containerSlideIn 1s ease-out;
 }
 
 @keyframes containerSlideIn {
-  from { opacity: 0; transform: scale(0.8) translateY(30px); }
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
   to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
@@ -71,36 +44,31 @@ body::before {
   position: relative;
   overflow: hidden;
 }
-
 .left-panel::before {
   content: '';
   position: absolute;
-  top: -60%;
-  left: -60%;
-  width: 220%;
-  height: 220%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 75%);
-  animation: lightPulse 5s ease-in-out infinite;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  animation: lightPulse 4s ease-in-out infinite;
 }
-
 @keyframes lightPulse {
-  0%, 100% { opacity: 0.2; transform: scale(1) rotate(0deg); }
-  50% { opacity: 0.5; transform: scale(1.2) rotate(180deg); }
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
 }
-
 .left-panel h1 {
   font-size: 32px;
   font-weight: 700;
   margin: 0 0 15px 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  animation: textGlow 2.5s ease-in-out infinite alternate;
+  animation: textGlow 2s ease-in-out infinite alternate;
 }
-
 @keyframes textGlow {
   from { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
-  to { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 25px rgba(255, 255, 255, 0.6); }
+  to { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5); }
 }
-
 .left-panel p {
   font-size: 16px;
   color: rgba(255, 255, 255, 0.9);
@@ -109,7 +77,8 @@ body::before {
   line-height: 1.5;
 }
 
-.left-panel .login-btn {
+/* Botón de acción izquierdo (login-btn/register-btn) */
+.left-panel .login-btn, .left-panel .register-btn {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -125,8 +94,7 @@ body::before {
   position: relative;
   overflow: hidden;
 }
-
-.left-panel .login-btn::before {
+.left-panel .login-btn::before, .left-panel .register-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -136,45 +104,53 @@ body::before {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   transition: left 0.5s;
 }
-
-.left-panel .login-btn:hover::before {
+.left-panel .login-btn:hover::before, .left-panel .register-btn:hover::before {
   left: 100%;
 }
-
-.left-panel .login-btn:hover {
+.left-panel .login-btn:hover, .left-panel .register-btn:hover {
   background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
-/* Panel derecho */
+/* Panel derecho: fondo blanco para Register, gradiente para Login */
 .right-panel {
   flex: 1;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(20px);
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 50px;
   border-radius: 0;
+  backdrop-filter: blur(20px);
+}
+/* Por defecto Register (blanco), sobreescribir en Login con clase extra si se desea */
+.right-panel {
+  background: rgba(255, 255, 255, 0.95);
+}
+.right-panel.login {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 /* Formulario */
-.register-form {
+.auth-form, .login-form, .register-form {
   width: 100%;
   max-width: 320px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
-
-.register-form h2 {
+.auth-form h2, .login-form h2, .register-form h2 {
   text-align: center;
   color: #2c3e50;
   font-size: 28px;
   font-weight: 700;
   margin-bottom: 35px;
   position: relative;
+  margin-top: 0;
 }
-
-.register-form h2::after {
+.auth-form h2::after, .login-form h2::after, .register-form h2::after {
   content: '';
   position: absolute;
   bottom: -10px;
@@ -189,12 +165,11 @@ body::before {
 /* Grupo de input */
 .input-group {
   position: relative;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
-
 .input-group input {
   width: 100%;
-  padding: 15px 20px;
+  padding: 15px 36px 15px 12px;
   background: rgba(255, 255, 255, 0.8);
   border: 2px solid rgba(102, 126, 234, 0.2);
   border-radius: 12px;
@@ -202,35 +177,33 @@ body::before {
   color: #2c3e50;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
 }
-
 .input-group input::placeholder {
   color: #9e9e9e;
 }
-
 .input-group input:focus {
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
   outline: none;
-  transform: translateY(-1px);
 }
-
 .input-group .icon {
   position: absolute;
-  right: 20px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   color: #667eea;
   font-size: 18px;
   transition: transform 0.3s ease;
 }
-
 .input-group input:focus + .icon {
-  transform: translateY(-50%) scale(1.1) rotate(5deg);
+  transform: translateY(-50%) scale(1.1);
 }
 
-/* Botón Registro */
-.register-btn {
+/* Botón principal de formulario */
+.login-btn, .register-btn {
   width: 100%;
   margin: 25px 0;
   background: linear-gradient(135deg, #667eea, #764ba2);
@@ -246,8 +219,7 @@ body::before {
   overflow: hidden;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
-
-.register-btn::before {
+.login-btn::before, .register-btn::before {
   content: '';
   position: absolute;
   top: 0;
@@ -257,34 +229,29 @@ body::before {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: left 0.5s;
 }
-
-.register-btn:hover::before {
+.login-btn:hover::before, .register-btn:hover::before {
   left: 100%;
 }
-
-.register-btn:hover {
+.login-btn:hover, .register-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
 /* Sección social */
-.social-register {
+.social-login, .social-register {
   text-align: center;
   margin-top: 25px;
 }
-
-.social-register p {
+.social-login p, .social-register p {
   font-size: 14px;
   color: #7f8c8d;
   margin-bottom: 20px;
 }
-
 .social-icons {
   display: flex;
   justify-content: center;
   gap: 20px;
 }
-
 .icon-box {
   width: 50px;
   height: 50px;
@@ -301,7 +268,6 @@ body::before {
   position: relative;
   overflow: hidden;
 }
-
 .icon-box::before {
   content: '';
   position: absolute;
@@ -313,11 +279,9 @@ body::before {
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-
 .icon-box:hover::before {
   opacity: 0.1;
 }
-
 .icon-box:hover {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 8px 20px rgba(102, 126, 234, 0.2);
@@ -328,84 +292,68 @@ body::before {
   .left-panel {
     padding: 40px 30px;
   }
-
   .right-panel {
     padding: 40px 30px;
   }
-
   .left-panel h1 {
     font-size: 28px;
   }
-
-  .register-form h2 {
+  .auth-form h2, .login-form h2, .register-form h2 {
     font-size: 24px;
   }
 }
-
 @media (max-width: 768px) {
-  .register-container {
+  .auth-container, .login-container, .register-container {
     flex-direction: column;
     width: 100%;
     height: 100vh;
   }
-
   .left-panel {
     border-radius: 0;
     padding: 30px 20px;
     min-height: 40vh;
   }
-
   .right-panel {
     border-radius: 0;
     padding: 30px 20px;
     min-height: 60vh;
     overflow-y: auto;
   }
-
   .left-panel h1 {
     font-size: 20px;
   }
-
   .left-panel p {
     font-size: 14px;
   }
-
-  .register-form h2 {
+  .auth-form h2, .login-form h2, .register-form h2 {
     font-size: 20px;
     margin-bottom: 25px;
   }
-
   .input-group input {
     padding: 12px 15px;
     font-size: 14px;
   }
-
-  .register-btn {
+  .login-btn, .register-btn {
     padding: 12px 25px;
     font-size: 14px;
   }
 }
-
 @media (max-width: 480px) {
-  .register-container {
+  .auth-container, .login-container, .register-container {
     flex-direction: column;
   }
-
   .left-panel {
     padding: 20px 15px;
     min-height: 30vh;
   }
-
   .right-panel {
     padding: 20px 15px;
     min-height: 70vh;
   }
-
   .left-panel h1 {
     font-size: 18px;
   }
-
-  .register-form {
+  .auth-form, .login-form, .register-form {
     max-width: 100%;
   }
 }

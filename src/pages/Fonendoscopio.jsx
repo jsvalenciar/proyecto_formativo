@@ -1,31 +1,417 @@
-import React, { useState } from 'react';
-import '../assets/css/monitor.css';
+import React, { useRef, useState } from 'react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import '../assets/css/Home.css';
 
 function Fonendoscopio() {
-  const [datosGenerales, setDatosGenerales] = useState({ servicio: '', ubicacion: '', nombreEquipo: 'FONENDOSCOPIO', marca: '', modelo: '', serie: '', activo: '', fechaMantenimiento: '', lugarMantenimiento: '', tipoMantenimiento: { preventivo: false, correctivo: false, predictivo: false } });
-  const [observaciones, setObservaciones] = useState('');
-  const [tablas, setTablas] = useState({
-    fisicaInstalacion: [{ item: 'Condiciones', resultado: '' }, { item: 'Limpieza', resultado: '' }, { item: 'Auriculares', resultado: '' }, { item: 'Tubo', resultado: '' }, { item: 'Diafragma', resultado: '' }, { item: 'Campana', resultado: '' }, { item: 'Membrana', resultado: '' }, { item: 'Conectores', resultado: '' }, { item: 'Cable', resultado: '' }, { item: 'Etiquetas', resultado: '' }, { item: 'General', resultado: '' }],
-    fuentePoder: [{ item: 'N/A - Sin batería', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }],
-    interfazUsuario: [{ item: 'Auriculares confortables', resultado: '' }, { item: 'Tubo flexible', resultado: '' }, { item: 'Diafragma resonancia', resultado: '' }, { item: 'Cambio diafragma-campana', resultado: '' }, { item: 'Indicadores', resultado: '' }, { item: 'Conectores', resultado: '' }, { item: 'General', resultado: '' }, { item: 'Otros', resultado: '' }],
-    sistemaControl: [{ item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }, { item: 'N/A', resultado: '' }],
-    pruebasDesempeno: [{ item: 'Auscultación cardíaca', resultado: '' }, { item: 'Auscultación pulmonar', resultado: '' }, { item: 'Calidad sonido', resultado: '' }, { item: 'Aislamiento ruido', resultado: '' }, { item: 'Respuesta frecuencia', resultado: '' }, { item: 'Sellado auriculares', resultado: '' }, { item: 'Durabilidad tubo', resultado: '' }, { item: 'General', resultado: '' }]
+  const formRef = useRef();
+  const [form, setForm] = useState({
+    codigo: '',
+    version: '',
+    fecha: '',
+    servicio: '',
+    nombreEquipo: '',
+    marca: '',
+    serie: '',
+    ubicacion: '',
+    modelo: '',
+    activo: '',
+    fechaMantenimiento: '',
+    lugarMantenimiento: '',
+    tipo: { preventivo: false, correctivo: false, predictivo: false },
+    informeUsuario: '',
+    actividades: {},
+    informeActividades: '',
+    patron1: '',
+    certificado1: '',
+    patron2: '',
+    certificado2: '',
+    realizadoPor: '',
+    cargoRealizado: '',
+    recibidoPor: '',
+    cargoRecibido: '',
+    firmaRecibido: ''
   });
-  const [firmas, setFirmas] = useState({ equipo1: { nombre: '', serial: '', certificado: '' }, equipo2: { nombre: '', serial: '', certificado: '' } });
-  const [informeActividades, setInformeActividades] = useState('');
 
-  const handleInputChange = (section, field, value) => { if (section === 'firmas') setFirmas(prev => ({ ...prev, [field]: value })); else setDatosGenerales(prev => ({ ...prev, [field]: value })); };
-  const handleRadioChange = (table, index, value) => { setTablas(prev => ({ ...prev, [table]: prev[table].map((row, i) => i === index ? { ...row, resultado: value } : row) })); };
-  const handleSubmit = () => console.log('Datos:', { datosGenerales, observaciones, tablas, firmas, informeActividades });
+  const tablas = {
+    fisica: [
+      'Condiciones ambientales', 'Orden y Limpieza', 'Estado físico de la carcasa', 'Cubiertas accesibles al usuario',
+      'Estado físico de los accesorios', 'Equipo Cuenta con Etiquetas', 'Guía de manejo rápido', 'Estabilidad del equipo',
+      'Frenos - bloqueo de ruedas', 'Partes móviles', 'Conectores de la carcasa', 'Fuentes de entrada (Voltaje, Gases medicinales, Agua)'
+    ],
+    fuente: [
+      'Verificación de cable de poder', 'Verificación del receptáculo', 'Verificación reguladores', 'Verificación de fusibles',
+      'Verificación de cables', 'Verificación de conectores', 'Verificación carga de baterías', 'Voltajes de entrada y salida',
+      'El chasis se encuentra aterrizado', 'Conexión a sistema de puesta a tierra'
+    ],
+    interfaz: [
+      'Revisión de display (brillo y nitidez)', 'Revisión pantalla táctil', 'Revisión de perillas de ajuste y control',
+      'Revisión de alarmas audibles y visuales', 'Revisión del teclado', 'Revisión sistema de impresión',
+      'Revisión funcionalidad del software', 'Revisión de pedales', 'Revisión de piezas a paciente', 'Revisión de luces indicadoras'
+    ],
+    mecanico: [
+      'Revisión de engranajes', 'Ajuste de tuercas y tornillos', 'Inspecciones de Piñones', 'Movilidad de ruedas', 'Revisión de frenos', 'Otro'
+    ],
+    hidraulico: [
+      'Revisión de mangueras y acoples',
+      'Revisión de empaques y fugas',
+      'Inspecciones de pistones',
+      'Revisión de bombas',
+      'Revisión de electroválvulas',
+      'Revisión de manómetros',
+      'Revisión de filtros'
+    ],
+    control: [
+      'Revisión de tarjeta de control', 'Revisión de sensores', 'Sistema de seguridad', 'Verificación de actuadores', 'Otro'
+    ],
+    neumatico: [
+      'Inspección de manómetro', 'Revisión de mangueras/tubos', 'Revisión compresor', 'Revisión de fugas', 'Revisión de control de flujo',
+      'Revisión de electroválvulas', 'Revisión de filtros', 'Revisión empaques'
+    ],
+    adicionales: [
+      'Limpieza interna del equipo', 'Limpieza externa del equipo', 'Lubricación de partes si aplica', 'Inspecciones signos de corrosión',
+      'Inspección de piezas faltantes', 'Revisión dispositivos/operadores', 'Inspección de componentes con sobrecalentamiento'
+    ],
+    desempeno: [
+      'Revisión de los modos de operación', 'Simulación de parámetros de entrada', 'Análisis de parámetros de salida',
+      'Verificando rango de exactitud', 'Corriente de fuga', 'Chasis (puesta a tierra) ≤ 10 μA',
+      'Chasis (sin toma a tierra) ≤ 10 μA', 'Sonda del cable ≤ 10 μA'
+    ]
+  };
+
+  React.useEffect(() => {
+    if (Object.keys(form.actividades).length === 0) {
+      const actividades = {};
+      Object.keys(tablas).forEach(tabla => {
+        tablas[tabla].forEach((row, idx) => {
+          actividades[`${tabla}_${idx}`] = { ap: false, r: false, na: false };
+        });
+      });
+      setForm(f => ({ ...f, actividades }));
+    }
+  }, []);
+
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setForm(f => ({ ...f, [name]: value }));
+  };
+  const handleTipo = (e) => {
+    const { name, checked } = e.target;
+    setForm(f => ({ ...f, tipo: { ...f.tipo, [name]: checked } }));
+  };
+  const handleActividad = (tabla, idx, col) => (e) => {
+    setForm(f => ({
+      ...f,
+      actividades: {
+        ...f.actividades,
+        [`${tabla}_${idx}`]: {
+          ...f.actividades[`${tabla}_${idx}`],
+          [col]: e.target.checked
+        }
+      }
+    }));
+  };
+
+  const handleExportPDF = async () => {
+    const input = formRef.current;
+    if (!input) return;
+    const prevBg = input.style.background;
+    const prevColor = input.style.color;
+    input.style.background = '#fff';
+    input.style.color = '#222';
+    const canvas = await html2canvas(input, { scale: 3, backgroundColor: '#fff', useCORS: true });
+    input.style.background = prevBg;
+    input.style.color = prevColor;
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const imgProps = pdf.getImageProperties(imgData);
+    const pdfWidth = pageWidth;
+    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save('reporte-fonendoscopio.pdf');
+  };
 
   return (
-    <div className="formato">
-      <header><div className="titulo"><h1>FONENDOSCOPIO - MANTENIMIENTO</h1></div><div className="info-cabecera"><p>Versión: 1.0</p><p>Fecha: {new Date().toLocaleDateString()}</p></div></header>
-      <section className="datos-generales"><h3>DATOS GENERALES</h3><div className="fila"><p><strong>Servicio:</strong> <input type="text" value={datosGenerales.servicio} onChange={(e) => handleInputChange('datosGenerales', 'servicio', e.target.value)} /></p><p><strong>Ubicación:</strong> <input type="text" value={datosGenerales.ubicacion} onChange={(e) => handleInputChange('datosGenerales', 'ubicacion', e.target.value)} /></p></div><div className="tipo-mantenimiento"><label><input type="checkbox" checked={datosGenerales.tipoMantenimiento.preventivo} onChange={(e) => setDatosGenerales(prev => ({ ...prev, tipoMantenimiento: { ...prev.tipoMantenimiento, preventivo: e.target.checked } }))} /> Preventivo</label><label><input type="checkbox" checked={datosGenerales.tipoMantenimiento.correctivo} onChange={(e) => setDatosGenerales(prev => ({ ...prev, tipoMantenimiento: { ...prev.tipoMantenimiento, correctivo: e.target.checked } }))} /> Correctivo</label></div></section>
-      <section className="observaciones"><h3>OBSERVACIONES</h3><textarea value={observaciones} onChange={(e) => setObservaciones(e.target.value)}></textarea></section>
-      <section className="tablas"><h3>INSPECCIÓN FÍSICA</h3><table><thead><tr><th>Item</th><th>AP</th><th>R</th><th>NA</th></tr></thead><tbody>{tablas.fisicaInstalacion.map((row, index) => (<tr key={index}><td>{row.item}</td><td><input type="radio" checked={row.resultado === 'AP'} onChange={() => handleRadioChange('fisicaInstalacion', index, 'AP')} /></td><td><input type="radio" checked={row.resultado === 'R'} onChange={() => handleRadioChange('fisicaInstalacion', index, 'R')} /></td><td><input type="radio" checked={row.resultado === 'NA'} onChange={() => handleRadioChange('fisicaInstalacion', index, 'NA')} /></td></tr>))}</tbody></table><h3>PRUEBAS DESEMPEÑO</h3><table><thead><tr><th>Item</th><th>AP</th><th>R</th><th>NA</th></tr></thead><tbody>{tablas.pruebasDesempeno.map((row, index) => (<tr key={index}><td>{row.item}</td><td><input type="radio" checked={row.resultado === 'AP'} onChange={() => handleRadioChange('pruebasDesempeno', index, 'AP')} /></td><td><input type="radio" checked={row.resultado === 'R'} onChange={() => handleRadioChange('pruebasDesempeno', index, 'R')} /></td><td><input type="radio" checked={row.resultado === 'NA'} onChange={() => handleRadioChange('pruebasDesempeno', index, 'NA')} /></td></tr>))}</tbody></table></section>
-      <footer><h3>INFORME</h3><textarea value={informeActividades} onChange={(e) => setInformeActividades(e.target.value)}></textarea></footer>
-      <button className="submit-btn" onClick={handleSubmit}>Enviar</button>
+    <div className="formato" ref={formRef} style={{ background: '#fff', color: '#222', padding: 0, borderRadius: 0, maxWidth: '100%', margin: 0, boxShadow: 'none' }}>
+      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #667eea', paddingBottom: 16, marginBottom: 24, marginTop: 20 }}>
+        <div className="titulo" style={{ flex: 1 }}>
+          <h1 style={{ fontSize: 22, fontWeight: 700, margin: 0, color: '#2c3e50', letterSpacing: '-0.5px' }}>REPORTE TÉCNICO DE MANTENIMIENTO EQUIPOS BIOMÉDICOS</h1>
+        </div>
+        <div className="info-cabecera" style={{ textAlign: 'right', fontSize: 13, color: '#7f8c8d', minWidth: 200, marginRight: 20, paddingTop: 10 }}>
+          <div style={{ marginBottom: 6 }}><strong>CÓDIGO:</strong> <input name="codigo" value={form.codigo} onChange={handleInput} style={{ width: 90, padding: '4px 8px', border: '1px solid #ddd', borderRadius: 4 }} /></div>
+          <div style={{ marginBottom: 6 }}><strong>VERSIÓN:</strong> <input name="version" value={form.version} onChange={handleInput} style={{ width: 60, padding: '4px 8px', border: '1px solid #ddd', borderRadius: 4 }} /></div>
+          <div><strong>FECHA:</strong> <input name="fecha" value={form.fecha} onChange={handleInput} style={{ width: 120, padding: '4px 8px', border: '1px solid #ddd', borderRadius: 4 }} type="date" /></div>
+        </div>
+      </header>
+      <section style={{ background: '#f8f9fa', padding: 20, borderRadius: 12, marginBottom: 20, border: '1px solid #e0e6ed' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 16, borderBottom: '2px solid #667eea', paddingBottom: 8 }}>DATOS GENERALES DEL EQUIPO</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>SERVICIO:</label>
+            <input name="servicio" value={form.servicio} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>NOMBRE DEL EQUIPO:</label>
+            <input name="nombreEquipo" value={form.nombreEquipo} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>MARCA:</label>
+            <input name="marca" value={form.marca} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>SERIE:</label>
+            <input name="serie" value={form.serie} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>UBICACIÓN:</label>
+            <input name="ubicacion" value={form.ubicacion} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>MODELO:</label>
+            <input name="modelo" value={form.modelo} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>ACTIVO:</label>
+            <input name="activo" value={form.activo} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
+          </div>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>FECHA DEL MANTENIMIENTO:</label>
+            <input name="fechaMantenimiento" value={form.fechaMantenimiento} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} type="date" />
+          </div>
+          <div style={{ background: 'white', padding: 12, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>LUGAR DEL MANTENIMIENTO:</label>
+            <input name="lugarMantenimiento" value={form.lugarMantenimiento} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} />
+          </div>
+        </div>
+      </section>
+      <section style={{ background: '#f8f9fa', padding: 20, borderRadius: 12, marginBottom: 20, border: '1px solid #e0e6ed' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 16, borderBottom: '2px solid #667eea', paddingBottom: 8 }}>TIPO DE MANTENIMIENTO</h3>
+        <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', background: 'white', padding: '10px 16px', borderRadius: 8, border: '1px solid #e0e6ed', transition: 'all 0.3s' }}>
+            <input type="checkbox" name="preventivo" checked={form.tipo.preventivo} onChange={handleTipo} style={{ transform: 'scale(1.2)', accentColor: '#667eea', cursor: 'pointer' }} />
+            <span style={{ fontWeight: 500, fontSize: 14, color: '#2c3e50' }}>MTTO PREVENTIVO</span>
+          </label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', background: 'white', padding: '10px 16px', borderRadius: 8, border: '1px solid #e0e6ed', transition: 'all 0.3s' }}>
+            <input type="checkbox" name="correctivo" checked={form.tipo.correctivo} onChange={handleTipo} style={{ transform: 'scale(1.2)', accentColor: '#667eea', cursor: 'pointer' }} />
+            <span style={{ fontWeight: 500, fontSize: 14, color: '#2c3e50' }}>MTTO CORRECTIVO</span>
+          </label>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', background: 'white', padding: '10px 16px', borderRadius: 8, border: '1px solid #e0e6ed', transition: 'all 0.3s' }}>
+            <input type="checkbox" name="predictivo" checked={form.tipo.predictivo} onChange={handleTipo} style={{ transform: 'scale(1.2)', accentColor: '#667eea', cursor: 'pointer' }} />
+            <span style={{ fontWeight: 500, fontSize: 14, color: '#2c3e50' }}>MTTO PREDICTIVO</span>
+          </label>
+        </div>
+      </section>
+      <section style={{ background: '#f8f9fa', padding: 20, borderRadius: 12, marginBottom: 20, border: '1px solid #e0e6ed' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 16, borderBottom: '2px solid #667eea', paddingBottom: 8 }}>INFORME DEL USUARIO, OBSERVACIONES DEL EQUIPO Y ERRORES PERSISTENTES</h3>
+        <div style={{ background: 'white', border: '1px solid #ddd', borderRadius: 8, padding: 12 }}>
+          <textarea name="informeUsuario" value={form.informeUsuario} onChange={handleInput} style={{ width: '100%', minHeight: 60, border: 'none', resize: 'vertical', fontSize: 14, fontFamily: 'inherit', lineHeight: 1.6, boxSizing: 'border-box' }} placeholder="Describa las observaciones del usuario, estado del equipo y errores persistentes..." />
+        </div>
+      </section>
+      <section style={{ background: '#f8f9fa', padding: 20, borderRadius: 12, marginBottom: 20, border: '1px solid #e0e6ed' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 20, borderBottom: '2px solid #667eea', paddingBottom: 8 }}>ACTIVIDADES DE MANTENIMIENTO</h3>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN FÍSICA - INSTALACIÓN</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.fisica.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`fisica_${idx}`]?.ap || false} onChange={handleActividad('fisica', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`fisica_${idx}`]?.r || false} onChange={handleActividad('fisica', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`fisica_${idx}`]?.na || false} onChange={handleActividad('fisica', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE FUENTE DE PODER</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.fuente.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`fuente_${idx}`]?.ap || false} onChange={handleActividad('fuente', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`fuente_${idx}`]?.r || false} onChange={handleActividad('fuente', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`fuente_${idx}`]?.na || false} onChange={handleActividad('fuente', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE INTERFAZ DE USUARIO</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.interfaz.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`interfaz_${idx}`]?.ap || false} onChange={handleActividad('interfaz', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`interfaz_${idx}`]?.r || false} onChange={handleActividad('interfaz', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`interfaz_${idx}`]?.na || false} onChange={handleActividad('interfaz', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA MECÁNICO</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.mecanico.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.ap || false} onChange={handleActividad('mecanico', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.r || false} onChange={handleActividad('mecanico', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.na || false} onChange={handleActividad('mecanico', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA HIDRÁULICO</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.hidraulico.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.ap || false} onChange={handleActividad('hidraulico', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.r || false} onChange={handleActividad('hidraulico', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.na || false} onChange={handleActividad('hidraulico', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN SISTEMA DE CONTROL</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.control.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.ap || false} onChange={handleActividad('control', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.r || false} onChange={handleActividad('control', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.na || false} onChange={handleActividad('control', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN NEUMÁTICO</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.neumatico.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.ap || false} onChange={handleActividad('neumatico', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.r || false} onChange={handleActividad('neumatico', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.na || false} onChange={handleActividad('neumatico', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>TAREAS ADICIONALES</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.adicionales.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`adicionales_${idx}`]?.ap || false} onChange={handleActividad('adicionales', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`adicionales_${idx}`]?.r || false} onChange={handleActividad('adicionales', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`adicionales_${idx}`]?.na || false} onChange={handleActividad('adicionales', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>PRUEBAS DE DESEMPEÑO</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.desempeno.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`desempeno_${idx}`]?.ap || false} onChange={handleActividad('desempeno', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`desempeno_${idx}`]?.r || false} onChange={handleActividad('desempeno', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`desempeno_${idx}`]?.na || false} onChange={handleActividad('desempeno', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <section style={{ background: '#f8f9fa', padding: 20, borderRadius: 12, marginTop: 20, border: '1px solid #e0e6ed' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 16, borderBottom: '2px solid #667eea', paddingBottom: 8 }}>INFORME DE ACTIVIDADES EFECTUADAS</h3>
+        <div style={{ background: 'white', border: '1px solid #ddd', borderRadius: 8, padding: 12 }}>
+          <textarea name="informeActividades" value={form.informeActividades} onChange={handleInput} style={{ width: '100%', minHeight: 60, border: 'none', resize: 'vertical', fontSize: 14, fontFamily: 'inherit', lineHeight: 1.6, boxSizing: 'border-box' }} placeholder="Describa detalladamente las actividades efectuadas durante el mantenimiento..." />
+        </div>
+      </section>
+      <section style={{ background: '#f8f9fa', padding: 20, borderRadius: 12, marginTop: 20, border: '1px solid #e0e6ed' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 16, borderBottom: '2px solid #667eea', paddingBottom: 8 }}>EQUIPOS PATRÓN UTILIZADOS</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
+          <div style={{ background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 8 }}>Equipo patrón utilizado 1:</label>
+            <input name="patron1" value={form.patron1} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, marginBottom: 12, boxSizing: 'border-box' }} placeholder="Nombre del equipo" />
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 8 }}>Certificado:</label>
+            <input name="certificado1" value={form.certificado1} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} placeholder="Número de certificado" />
+          </div>
+          <div style={{ background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 8 }}>Equipo patrón utilizado 2:</label>
+            <input name="patron2" value={form.patron2} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, marginBottom: 12, boxSizing: 'border-box' }} placeholder="Nombre del equipo" />
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 8 }}>Certificado:</label>
+            <input name="certificado2" value={form.certificado2} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} placeholder="Número de certificado" />
+          </div>
+        </div>
+      </section>
+      <section style={{ background: '#f8f9fa', padding: 20, borderRadius: 12, marginTop: 20, border: '1px solid #e0e6ed' }}>
+        <h3 style={{ fontSize: 16, fontWeight: 600, color: '#2c3e50', marginTop: 0, marginBottom: 16, borderBottom: '2px solid #667eea', paddingBottom: 8 }}>FIRMAS Y RESPONSABLES</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>
+          <div style={{ background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#34495e', marginTop: 0, marginBottom: 12 }}>Mantenimiento realizado por:</h4>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>Nombre:</label>
+            <input name="realizadoPor" value={form.realizadoPor} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, marginBottom: 12, boxSizing: 'border-box' }} placeholder="Nombre completo" />
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>Cargo:</label>
+            <input name="cargoRealizado" value={form.cargoRealizado} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, boxSizing: 'border-box' }} placeholder="Cargo del técnico" />
+          </div>
+          <div style={{ background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, color: '#34495e', marginTop: 0, marginBottom: 12 }}>Recibido a satisfacción por:</h4>
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>Nombre:</label>
+            <input name="recibidoPor" value={form.recibidoPor} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, marginBottom: 12, boxSizing: 'border-box' }} placeholder="Nombre completo" />
+            <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>Cargo:</label>
+            <input name="cargoRecibido" value={form.cargoRecibido} onChange={handleInput} style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14, marginBottom: 12, boxSizing: 'border-box' }} placeholder="Cargo del responsable" />
+            <div style={{ marginTop: 20, textAlign: 'center' }}>
+              <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#34495e', marginBottom: 6 }}>Firma:</label>
+              <div style={{ borderBottom: '2px solid #333', width: '60%', paddingTop: 40, marginTop: 15, marginLeft: 'auto', marginRight: 'auto' }}></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div style={{ textAlign: 'center', marginTop: 30, marginBottom: 10 }}>
+        <button className="submit-btn" onClick={handleExportPDF} style={{ background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: '14px 40px', border: 'none', borderRadius: 8, fontSize: 16, fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)', transition: 'all 0.3s ease' }}>Generar PDF del Reporte</button>
+      </div>
     </div>
   );
 }

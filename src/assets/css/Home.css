@@ -93,17 +93,19 @@ button:focus-visible {
   }
 }
 
-/* Botón "Inicio" siempre azul, sin hover */
-.nav-link.home {
+/* Botones "Inicio" y "Crear Clientes" siempre azules */
+.nav-link.home,
+.nav-link.clientes {
   background: linear-gradient(135deg, #667eea, #764ba2) !important;
   color: #fff !important;
   border: none !important;
   box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 .nav-link.home:hover,
-.nav-link.home:focus {
-  background: linear-gradient(135deg, #667eea, #764ba2) !important;
-  color: #fff !important;
+.nav-link.clientes:hover {
+  background: linear-gradient(135deg, #5568d3, #6a3f8f) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 /* Navbar Styles */
@@ -173,22 +175,6 @@ button:focus-visible {
 .nav-link.logout:hover {
   background: #e74c3c;
   color: white;
-}
-
-/* Mantener el primer enlace de la barra de navegación (Inicio) marcado en azul
-   y desactivar su interacción hover visual. No afecta a otros enlaces. */
-.nav-links .nav-link:first-child {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  transform: none;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-}
-.nav-links .nav-link:first-child:hover {
-  /* Mantener el mismo estilo al pasar el cursor */
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  transform: none;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 body::before {

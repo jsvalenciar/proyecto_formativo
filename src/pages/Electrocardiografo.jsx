@@ -34,47 +34,93 @@ function Electrocardiografo() {
 
   const tablas = {
     fisica: [
-      'Condiciones ambientales', 'Orden y Limpieza', 'Estado físico de la carcasa', 'Cubiertas accesibles al usuario',
-      'Estado físico de los accesorios', 'Equipo Cuenta con Etiquetas', 'Guía de manejo rápido', 'Estabilidad del equipo',
-      'Frenos - bloqueo de ruedas', 'Partes móviles', 'Conectores de la carcasa', 'Fuentes de entrada (Voltaje, Gases medicinales, Agua)'
+      'Condiciones ambientales',
+      'Orden y limpieza general',
+      'Estado físico de la carcasa',
+      'Etiquetas y marcas de identificación',
+      'Estabilidad del equipo',
+      'Conectores y puertos externos',
+      'Verificación de accesorios completos'
     ],
     fuente: [
-      'Verificación de cable de poder', 'Verificación del receptáculo', 'Verificación reguladores', 'Verificación de fusibles',
-      'Verificación de cables', 'Verificación de conectores', 'Verificación carga de baterías', 'Voltajes de entrada y salida',
-      'El chasis se encuentra aterrizado', 'Conexión a sistema de puesta a tierra'
+      'Inspección del cable de alimentación',
+      'Verificación del enchufe',
+      'Revisión de fusibles',
+      'Prueba de continuidad eléctrica',
+      'Medición de voltaje de entrada',
+      'Verificación del switch de encendido',
+      'Estado de batería interna',
+      'Prueba de autonomía de batería',
+      'Conexión a tierra verificada',
+      'Indicadores de carga funcionando'
+    ],
+    electrodos: [
+      'Inspección de cables de derivación',
+      'Estado de conectores tipo banana',
+      'Revisión de código de colores',
+      'Prueba de continuidad de cables',
+      'Verificación de bornes de conexión'
     ],
     interfaz: [
-      'Revisión de display (brillo y nitidez)', 'Revisión pantalla táctil', 'Revisión de perillas de ajuste y control',
-      'Revisión de alarmas audibles y visuales', 'Revisión del teclado', 'Revisión sistema de impresión',
-      'Revisión funcionalidad del software', 'Revisión de pedales', 'Revisión de piezas a paciente', 'Revisión de luces indicadoras'
+      'Funcionamiento de pantalla/display',
+      'Prueba de brillo y contraste',
+      'Verificación del teclado',
+      'Funcionalidad de botones de control',
+      'Revisión de perillas de ajuste',
+      'Prueba de menús de configuración',
+      'Verificación de selección de derivaciones',
+      'Revisión de indicadores visuales',
+      'Prueba de pantalla táctil (si aplica)'
     ],
-    mecanico: [
-      'Revisión de engranajes', 'Ajuste de tuercas y tornillos', 'Inspecciones de Piñones', 'Movilidad de ruedas', 'Revisión de frenos', 'Otro'
+    impresion: [
+      'Funcionamiento del sistema de impresión',
+      'Revisión del cabezal térmico',
+      'Verificación de avance de papel',
+      'Prueba de calidad de impresión',
+      'Limpieza de cabezal'
     ],
-    hidraulico: [
-      'Revisión de mangueras y acoples',
-      'Revisión de empaques y fugas',
-      'Inspecciones de pistones',
-      'Revisión de bombas',
-      'Revisión de electroválvulas',
-      'Revisión de manómetros',
-      'Revisión de filtros'
+    software: [
+      'Verificación de versión de software',
+      'Funcionalidad del sistema operativo',
+      'Prueba de menús y configuraciones',
+      'Verificación de modos de adquisición',
+      'Prueba de almacenamiento de datos',
+      'Funcionalidad de interpretación automática',
+      'Verificación de filtros de señal',
+      'Prueba de impresión de reportes',
+      'Configuración de parámetros'
     ],
-    control: [
-      'Revisión de tarjeta de control', 'Revisión de sensores', 'Sistema de seguridad', 'Verificación de actuadores', 'Otro'
-    ],
-    neumatico: [
-      'Inspección de manómetro', 'Revisión de mangueras/tubos', 'Revisión compresor', 'Revisión de fugas', 'Revisión de control de flujo',
-      'Revisión de electroválvulas', 'Revisión de filtros', 'Revisión empaques'
+    calibracion: [
+      'Prueba de señal de calibración 1mV',
+      'Verificación de amplitud de señal',
+      'Medición de sensibilidad (mm/mV)',
+      'Prueba de velocidad de papel (mm/s)',
+      'Verificación de filtros de frecuencia',
+      'Prueba de rechazo de modo común (CMRR)',
+      'Verificación de impedancia de entrada',
+      'Calibración de ganancia',
+      'Ajuste de línea base'
     ],
     adicionales: [
-      'Limpieza interna del equipo', 'Limpieza externa del equipo', 'Lubricación de partes si aplica', 'Inspecciones signos de corrosión',
-      'Inspección de piezas faltantes', 'Revisión dispositivos/operadores', 'Inspección de componentes con sobrecalentamiento'
+      'Limpieza externa del equipo',
+      'Desinfección de superficies',
+      'Limpieza de electrodos y cables',
+      'Inspección de signos de corrosión',
+      'Verificación de conectividad',
+      'Revisión de cables internos',
+      'Limpieza de ventilación',
+      'Documentación de hallazgos'
     ],
     desempeno: [
-      'Revisión de los modos de operación', 'Simulación de parámetros de entrada', 'Análisis de parámetros de salida',
-      'Verificando rango de exactitud', 'Corriente de fuga', 'Chasis (puesta a tierra) ≤ 10 μA',
-      'Chasis (sin toma a tierra) ≤ 10 μA', 'Sonda del cable ≤ 10 μA'
+      'Prueba con simulador de ECG',
+      'Verificación de 12 derivaciones',
+      'Prueba de señal de calibración precisa',
+      'Medición de corriente de fuga ≤ 100 μA',
+      'Verificación de ancho de banda',
+      'Prueba de respuesta en frecuencia',
+      'Corriente auxiliar de paciente ≤ 10 μA',
+      'Resistencia de puesta a tierra ≤ 0.2 Ω',
+      'Verificación de rechazo de interferencias'
     ]
   };
 
@@ -247,32 +293,32 @@ function Electrocardiografo() {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA MECÁNICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE ELECTRODOS Y CABLES</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.mecanico.map((row, idx) => (
+                {tablas.electrodos.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.ap || false} onChange={handleActividad('mecanico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.r || false} onChange={handleActividad('mecanico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.na || false} onChange={handleActividad('mecanico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`electrodos_${idx}`]?.ap || false} onChange={handleActividad('electrodos', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`electrodos_${idx}`]?.r || false} onChange={handleActividad('electrodos', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`electrodos_${idx}`]?.na || false} onChange={handleActividad('electrodos', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA HIDRÁULICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DEL SISTEMA DE IMPRESIÓN</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.hidraulico.map((row, idx) => (
+                {tablas.impresion.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.ap || false} onChange={handleActividad('hidraulico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.r || false} onChange={handleActividad('hidraulico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.na || false} onChange={handleActividad('hidraulico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`impresion_${idx}`]?.ap || false} onChange={handleActividad('impresion', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`impresion_${idx}`]?.r || false} onChange={handleActividad('impresion', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`impresion_${idx}`]?.na || false} onChange={handleActividad('impresion', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -281,32 +327,32 @@ function Electrocardiografo() {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN SISTEMA DE CONTROL</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SOFTWARE</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.control.map((row, idx) => (
+                {tablas.software.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.ap || false} onChange={handleActividad('control', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.r || false} onChange={handleActividad('control', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.na || false} onChange={handleActividad('control', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`software_${idx}`]?.ap || false} onChange={handleActividad('software', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`software_${idx}`]?.r || false} onChange={handleActividad('software', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`software_${idx}`]?.na || false} onChange={handleActividad('software', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN NEUMÁTICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>CALIBRACIÓN Y AJUSTES</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.neumatico.map((row, idx) => (
+                {tablas.calibracion.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.ap || false} onChange={handleActividad('neumatico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.r || false} onChange={handleActividad('neumatico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.na || false} onChange={handleActividad('neumatico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.ap || false} onChange={handleActividad('calibracion', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.r || false} onChange={handleActividad('calibracion', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.na || false} onChange={handleActividad('calibracion', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>

@@ -54,7 +54,7 @@ function Monitor() {
       'Revisión funcionalidad del software', 'Revisión de pedales', 'Revisión de piezas a paciente', 'Revisión de luces indicadoras'
     ],
     mecanico: [
-      'Revisión de engranajes', 'Ajuste de tuercas y tornillos', 'Inspecciones de Piñones', 'Movilidad de ruedas', 'Revisión de frenos', 'Otro'
+      'Revisión de engranajes', 'Ajuste de tuercas y tornillos', 'Movilidad de ruedas', 'Revisión de frenos'
     ],
     hidraulico: [
       'Revisión de mangueras y acoples',
@@ -66,7 +66,7 @@ function Monitor() {
       'Revisión de filtros'
     ],
     control: [
-      'Revisión de tarjeta de control', 'Revisión de sensores', 'Sistema de seguridad', 'Verificación de actuadores', 'Otro'
+      'Revisión de tarjeta de control', 'Revisión de sensores', 'Sistema de seguridad', 'Verificación de actuadores'
     ],
     neumatico: [
       'Inspección de manómetro', 'Revisión de mangueras/tubos', 'Revisión compresor', 'Revisión de fugas', 'Revisión de control de flujo',

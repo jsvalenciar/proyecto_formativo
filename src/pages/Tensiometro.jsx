@@ -34,47 +34,95 @@ function Tensiometro() {
 
   const tablas = {
     fisica: [
-      'Condiciones ambientales', 'Orden y Limpieza', 'Estado físico de la carcasa', 'Cubiertas accesibles al usuario',
-      'Estado físico de los accesorios', 'Equipo Cuenta con Etiquetas', 'Guía de manejo rápido', 'Estabilidad del equipo',
-      'Frenos - bloqueo de ruedas', 'Partes móviles', 'Conectores de la carcasa', 'Fuentes de entrada (Voltaje, Gases medicinales, Agua)'
+      'Condiciones ambientales',
+      'Orden y limpieza general',
+      'Estado físico de la carcasa',
+      'Etiquetas de identificación',
+      'Estabilidad del equipo',
+      'Accesorios completos'
     ],
     fuente: [
-      'Verificación de cable de poder', 'Verificación del receptáculo', 'Verificación reguladores', 'Verificación de fusibles',
-      'Verificación de cables', 'Verificación de conectores', 'Verificación carga de baterías', 'Voltajes de entrada y salida',
-      'El chasis se encuentra aterrizado', 'Conexión a sistema de puesta a tierra'
+      'Inspección del cable de alimentación',
+      'Verificación del adaptador (si aplica)',
+      'Estado de baterías',
+      'Prueba de autonomía de batería',
+      'Indicador de carga funcionando',
+      'Medición de voltaje de entrada',
+      'Verificación del switch de encendido',
+      'Conexión a tierra (si aplica)'
     ],
-    interfaz: [
-      'Revisión de display (brillo y nitidez)', 'Revisión pantalla táctil', 'Revisión de perillas de ajuste y control',
-      'Revisión de alarmas audibles y visuales', 'Revisión del teclado', 'Revisión sistema de impresión',
-      'Revisión funcionalidad del software', 'Revisión de pedales', 'Revisión de piezas a paciente', 'Revisión de luces indicadoras'
-    ],
-    mecanico: [
-      'Revisión de engranajes', 'Ajuste de tuercas y tornillos', 'Inspecciones de Piñones', 'Movilidad de ruedas', 'Revisión de frenos', 'Otro'
-    ],
-    hidraulico: [
-      'Revisión de mangueras y acoples',
-      'Revisión de empaques y fugas',
-      'Inspecciones de pistones',
-      'Revisión de bombas',
-      'Revisión de electroválvulas',
-      'Revisión de manómetros',
-      'Revisión de filtros'
-    ],
-    control: [
-      'Revisión de tarjeta de control', 'Revisión de sensores', 'Sistema de seguridad', 'Verificación de actuadores', 'Otro'
+    brazalete: [
+      'Inspección del brazalete',
+      'Estado de la cámara inflable',
+      'Inspección de tubería conexión',
+      'Prueba de hermeticidad',
+      'Limpieza y desinfección del brazalete'
     ],
     neumatico: [
-      'Inspección de manómetro', 'Revisión de mangueras/tubos', 'Revisión compresor', 'Revisión de fugas', 'Revisión de control de flujo',
-      'Revisión de electroválvulas', 'Revisión de filtros', 'Revisión empaques'
+      'Inspección de mangueras',
+      'Verificación de conexiones',
+      'Revisión de válvulas',
+      'Prueba de fugas de aire',
+      'Verificación de bomba de inflado',
+      'Funcionamiento de válvula de desinflado',
+      'Revisión de conectores',
+      'Inspección de fisuras en tubería',
+      'Prueba de presión del sistema'
+    ],
+    interfaz: [
+      'Funcionamiento del display',
+      'Prueba de brillo y contraste',
+      'Visualización de valores numéricos',
+      'Verificación de botones de control',
+      'Funcionamiento de menú',
+      'Revisión de indicadores LED',
+      'Prueba de selección de modo',
+      'Visualización de presión en tiempo real'
+    ],
+    manometro: [
+      'Inspección del manómetro (analógico)',
+      'Verificación de aguja indicadora',
+      'Revisión de carátula y escala',
+      'Verificación de cristal protector',
+      'Prueba de movimiento suave de aguja',
+      'Verificación de retorno a cero',
+      'Calibración del manómetro',
+      'Inspección de mecanismo interno'
+    ],
+    alarmas: [
+      'Prueba de alarma de error',
+      'Verificación de alarma de batería baja',
+      'Prueba de indicadores de fallo',
+      'Ajuste de volumen de alarma',
+      'Verificación de alarmas visuales',
+      'Funcionalidad de silenciar alarma'
+    ],
+    calibracion: [
+      'Calibración con patrón certificado',
+      'Verificación de presión sistólica y diastólica',
+      'Verificación de frecuencia cardíaca',
+      'Comparación con tensiómetro patrón'
     ],
     adicionales: [
-      'Limpieza interna del equipo', 'Limpieza externa del equipo', 'Lubricación de partes si aplica', 'Inspecciones signos de corrosión',
-      'Inspección de piezas faltantes', 'Revisión dispositivos/operadores', 'Inspección de componentes con sobrecalentamiento'
+      'Limpieza externa del equipo',
+      'Desinfección de superficies',
+      'Limpieza de brazalete',
+      'Inspección de signos de desgaste',
+      'Verificación de todos los accesorios',
+      'Revisión de estuche de transporte',
+      'Documentación de hallazgos',
+      'Etiquetado de mantenimiento'
     ],
     desempeno: [
-      'Revisión de los modos de operación', 'Simulación de parámetros de entrada', 'Análisis de parámetros de salida',
-      'Verificando rango de exactitud', 'Corriente de fuga', 'Chasis (puesta a tierra) ≤ 10 μA',
-      'Chasis (sin toma a tierra) ≤ 10 μA', 'Sonda del cable ≤ 10 μA'
+      'Prueba con simulador de presión',
+      'Exactitud ±3 mmHg (presión)',
+      'Exactitud ±5% (frecuencia cardíaca)',
+      'Verificación en rangos: 0-300 mmHg',
+      'Tiempo de medición aceptable',
+      'Repetibilidad de mediciones',
+      'Corriente de fuga ≤ 100 μA (digital)',
+      'Resistencia de puesta a tierra ≤ 0.2 Ω',
+      'Funcionamiento en modo adulto/pediátrico/neonatal'
     ]
   };
 
@@ -245,32 +293,32 @@ function Tensiometro() {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA MECÁNICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DEL BRAZALETE</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.mecanico.map((row, idx) => (
+                {tablas.brazalete.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.ap || false} onChange={handleActividad('mecanico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.r || false} onChange={handleActividad('mecanico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.na || false} onChange={handleActividad('mecanico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`brazalete_${idx}`]?.ap || false} onChange={handleActividad('brazalete', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`brazalete_${idx}`]?.r || false} onChange={handleActividad('brazalete', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`brazalete_${idx}`]?.na || false} onChange={handleActividad('brazalete', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA HIDRÁULICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DEL MANÓMETRO</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.hidraulico.map((row, idx) => (
+                {tablas.manometro.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.ap || false} onChange={handleActividad('hidraulico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.r || false} onChange={handleActividad('hidraulico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.na || false} onChange={handleActividad('hidraulico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`manometro_${idx}`]?.ap || false} onChange={handleActividad('manometro', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`manometro_${idx}`]?.r || false} onChange={handleActividad('manometro', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`manometro_${idx}`]?.na || false} onChange={handleActividad('manometro', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -279,16 +327,16 @@ function Tensiometro() {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN SISTEMA DE CONTROL</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE ALARMAS</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.control.map((row, idx) => (
+                {tablas.alarmas.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.ap || false} onChange={handleActividad('control', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.r || false} onChange={handleActividad('control', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.na || false} onChange={handleActividad('control', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`alarmas_${idx}`]?.ap || false} onChange={handleActividad('alarmas', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`alarmas_${idx}`]?.r || false} onChange={handleActividad('alarmas', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`alarmas_${idx}`]?.na || false} onChange={handleActividad('alarmas', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -312,6 +360,22 @@ function Tensiometro() {
           </div>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
+          <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>CALIBRACIÓN</h4>
+            <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
+              <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
+              <tbody>
+                {tablas.calibracion.map((row, idx) => (
+                  <tr key={row}>
+                    <td>{row}</td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.ap || false} onChange={handleActividad('calibracion', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.r || false} onChange={handleActividad('calibracion', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.na || false} onChange={handleActividad('calibracion', idx, 'na')} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
             <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>TAREAS ADICIONALES</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">

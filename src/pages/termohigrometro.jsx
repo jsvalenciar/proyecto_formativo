@@ -34,47 +34,46 @@ function Termohigrometro() {
 
   const tablas = {
     fisica: [
-      'Condiciones ambientales', 'Orden y Limpieza', 'Estado físico de la carcasa', 'Cubiertas accesibles al usuario',
-      'Estado físico de los accesorios', 'Equipo Cuenta con Etiquetas', 'Guía de manejo rápido', 'Estabilidad del equipo',
-      'Frenos - bloqueo de ruedas', 'Partes móviles', 'Conectores de la carcasa', 'Fuentes de entrada (Voltaje, Gases medicinales, Agua)'
+      'Condiciones ambientales', 'Orden y Limpieza', 'Estado físico de la carcasa', 'Cubiertas accesibles',
+      'Etiquetas de calibración vigentes', 'Estabilidad del equipo', 'Soportes o montajes seguros'
     ],
     fuente: [
-      'Verificación de cable de poder', 'Verificación del receptáculo', 'Verificación reguladores', 'Verificación de fusibles',
-      'Verificación de cables', 'Verificación de conectores', 'Verificación carga de baterías', 'Voltajes de entrada y salida',
-      'El chasis se encuentra aterrizado', 'Conexión a sistema de puesta a tierra'
+      'Verificación de cable de poder', 'Verificación del receptáculo', 'Verificación de fusibles', 'Verificación de conectores',
+      'Verificación carga de baterías', 'Autonomía de la batería', 'Voltajes de entrada', 'Indicador de batería baja',
+      'Conexión a sistema de puesta a tierra'
+    ],
+    sensor_temperatura: [
+      'Inspección del sensor de temperatura', 'Limpieza del sensor', 'Ausencia de daños físicos en el sensor',
+      'Calibración del sensor de temperatura', 'Tiempo de respuesta del sensor', 'Estabilidad de lectura (deriva)',
+      'Verificación con termómetro patrón', 'Exactitud ±0.5°C o según especificaciones', 'Rango de medición adecuado'
+    ],
+    sensor_humedad: [
+      'Inspección del sensor de humedad', 'Ausencia de contaminación', 'Calibración del sensor de humedad',
+      'Tiempo de respuesta del sensor', 'Estabilidad de lectura', 'Exactitud ±3% HR', 'Rango de medición 0-100% HR'
     ],
     interfaz: [
-      'Revisión de display (brillo y nitidez)', 'Revisión pantalla táctil', 'Revisión de perillas de ajuste y control',
-      'Revisión de alarmas audibles y visuales', 'Revisión del teclado', 'Revisión sistema de impresión',
-      'Revisión funcionalidad del software', 'Revisión de pedales', 'Revisión de piezas a paciente', 'Revisión de luces indicadoras'
+      'Revisión de display (legibilidad)', 'Revisión de retroiluminación', 'Revisión de botones de control',
+      'Revisión de alarmas audibles y visuales', 'Revisión de menú de configuración', 'Unidades de medición correctas (°C, % HR)',
+      'Función de registro de datos', 'Interfaz de comunicación (USB, Bluetooth, etc.)', 'Exportación de datos'
     ],
-    mecanico: [
-      'Revisión de engranajes', 'Ajuste de tuercas y tornillos', 'Inspecciones de Piñones', 'Movilidad de ruedas', 'Revisión de frenos', 'Otro'
+    software: [
+      'Verificación de firmware actualizado', 'Configuración de límites de alarma', 'Función de registro continuo (datalogger)',
+      'Configuración de intervalos de muestreo', 'Sincronización de fecha y hora', 'Memoria de almacenamiento disponible',
+      'Descarga de datos históricos', 'Software de análisis compatible', 'Reportes automáticos'
     ],
-    hidraulico: [
-      'Revisión de mangueras y acoples',
-      'Revisión de empaques y fugas',
-      'Inspecciones de pistones',
-      'Revisión de bombas',
-      'Revisión de electroválvulas',
-      'Revisión de manómetros',
-      'Revisión de filtros'
-    ],
-    control: [
-      'Revisión de tarjeta de control', 'Revisión de sensores', 'Sistema de seguridad', 'Verificación de actuadores', 'Otro'
-    ],
-    neumatico: [
-      'Inspección de manómetro', 'Revisión de mangueras/tubos', 'Revisión compresor', 'Revisión de fugas', 'Revisión de control de flujo',
-      'Revisión de electroválvulas', 'Revisión de filtros', 'Revisión empaques'
+    calibracion: [
+      'Calibración con patrones certificados', 'Verificación de temperatura y humedad', 'Certificado de calibración vigente',
+      'Trazabilidad metrológica', 'Etiqueta de próxima calibración'
     ],
     adicionales: [
-      'Limpieza interna del equipo', 'Limpieza externa del equipo', 'Lubricación de partes si aplica', 'Inspecciones signos de corrosión',
-      'Inspección de piezas faltantes', 'Revisión dispositivos/operadores', 'Inspección de componentes con sobrecalentamiento'
+      'Limpieza externa del equipo', 'Limpieza de sensores con método apropiado', 'Inspección de signos de corrosión',
+      'Verificación de montaje o ubicación adecuada', 'Revisión de ciclo de vida de sensores', 'Reemplazo de sensores si aplica',
+      'Verificación de condiciones de almacenamiento', 'Inspección de componentes con sobrecalentamiento'
     ],
     desempeno: [
-      'Revisión de los modos de operación', 'Simulación de parámetros de entrada', 'Análisis de parámetros de salida',
-      'Verificando rango de exactitud', 'Corriente de fuga', 'Chasis (puesta a tierra) ≤ 10 μA',
-      'Chasis (sin toma a tierra) ≤ 10 μA', 'Sonda del cable ≤ 10 μA'
+      'Verificación de exactitud de temperatura', 'Verificación de exactitud de humedad', 'Tiempo de estabilización',
+      'Repetibilidad de mediciones', 'Reproducibilidad entre mediciones', 'Verificación de histéresis',
+      'Prueba de funcionamiento en condiciones extremas', 'Verificación de alarmas', 'Registro de resultados de pruebas'
     ]
   };
 
@@ -247,32 +246,32 @@ function Termohigrometro() {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA MECÁNICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DEL SENSOR DE TEMPERATURA</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.mecanico.map((row, idx) => (
+                {tablas.sensor_temperatura.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.ap || false} onChange={handleActividad('mecanico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.r || false} onChange={handleActividad('mecanico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.na || false} onChange={handleActividad('mecanico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`sensor_temperatura_${idx}`]?.ap || false} onChange={handleActividad('sensor_temperatura', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`sensor_temperatura_${idx}`]?.r || false} onChange={handleActividad('sensor_temperatura', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`sensor_temperatura_${idx}`]?.na || false} onChange={handleActividad('sensor_temperatura', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA HIDRÁULICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DEL SENSOR DE HUMEDAD</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.hidraulico.map((row, idx) => (
+                {tablas.sensor_humedad.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.ap || false} onChange={handleActividad('hidraulico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.r || false} onChange={handleActividad('hidraulico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.na || false} onChange={handleActividad('hidraulico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`sensor_humedad_${idx}`]?.ap || false} onChange={handleActividad('sensor_humedad', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`sensor_humedad_${idx}`]?.r || false} onChange={handleActividad('sensor_humedad', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`sensor_humedad_${idx}`]?.na || false} onChange={handleActividad('sensor_humedad', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -281,32 +280,32 @@ function Termohigrometro() {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN SISTEMA DE CONTROL</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SOFTWARE</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.control.map((row, idx) => (
+                {tablas.software.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.ap || false} onChange={handleActividad('control', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.r || false} onChange={handleActividad('control', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.na || false} onChange={handleActividad('control', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`software_${idx}`]?.ap || false} onChange={handleActividad('software', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`software_${idx}`]?.r || false} onChange={handleActividad('software', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`software_${idx}`]?.na || false} onChange={handleActividad('software', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN NEUMÁTICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>CALIBRACIÓN Y AJUSTES</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.neumatico.map((row, idx) => (
+                {tablas.calibracion.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.ap || false} onChange={handleActividad('neumatico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.r || false} onChange={handleActividad('neumatico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.na || false} onChange={handleActividad('neumatico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.ap || false} onChange={handleActividad('calibracion', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.r || false} onChange={handleActividad('calibracion', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`calibracion_${idx}`]?.na || false} onChange={handleActividad('calibracion', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>

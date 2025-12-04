@@ -34,47 +34,42 @@ function Fonendoscopio() {
 
   const tablas = {
     fisica: [
-      'Condiciones ambientales', 'Orden y Limpieza', 'Estado físico de la carcasa', 'Cubiertas accesibles al usuario',
-      'Estado físico de los accesorios', 'Equipo Cuenta con Etiquetas', 'Guía de manejo rápido', 'Estabilidad del equipo',
-      'Frenos - bloqueo de ruedas', 'Partes móviles', 'Conectores de la carcasa', 'Fuentes de entrada (Voltaje, Gases medicinales, Agua)'
+      'Condiciones ambientales', 'Orden y Limpieza', 'Estado físico general', 'Inspección visual de componentes',
+      'Equipo Cuenta con Etiquetas', 'Etiquetado legible', 'Identificación del modelo', 'Registro de uso',
+      'Ausencia de daños físicos', 'Estado del estuche/funda'
     ],
-    fuente: [
-      'Verificación de cable de poder', 'Verificación del receptáculo', 'Verificación reguladores', 'Verificación de fusibles',
-      'Verificación de cables', 'Verificación de conectores', 'Verificación carga de baterías', 'Voltajes de entrada y salida',
-      'El chasis se encuentra aterrizado', 'Conexión a sistema de puesta a tierra'
+    tubuladuras: [
+      'Inspección del tubo de goma', 'Flexibilidad del tubo', 'Ausencia de grietas o roturas',
+      'Ausencia de fugas de aire', 'Conexión tubo-campana hermética', 'Limpieza del tubo interno'
     ],
-    interfaz: [
-      'Revisión de display (brillo y nitidez)', 'Revisión pantalla táctil', 'Revisión de perillas de ajuste y control',
-      'Revisión de alarmas audibles y visuales', 'Revisión del teclado', 'Revisión sistema de impresión',
-      'Revisión funcionalidad del software', 'Revisión de pedales', 'Revisión de piezas a paciente', 'Revisión de luces indicadoras'
+    campana: [
+      'Integridad del diafragma', 'Sujeción del diafragma', 'Ausencia de grietas en la campana',
+      'Aro sin deformaciones', 'Sellado hermético', 'Limpieza de superficies de contacto'
     ],
-    mecanico: [
-      'Revisión de engranajes', 'Ajuste de tuercas y tornillos', 'Inspecciones de Piñones', 'Movilidad de ruedas', 'Revisión de frenos', 'Otro'
+    olivas: [
+      'Estado de las olivas auriculares', 'Ajuste de las olivas al oído', 'Ausencia de deformaciones', 'Limpieza de las olivas',
+      'Condición del material (silicona/goma)', 'Cambio de olivas si es necesario', 'Ángulo de las olivas adecuado', 'Comodidad de uso'
     ],
-    hidraulico: [
-      'Revisión de mangueras y acoples',
-      'Revisión de empaques y fugas',
-      'Inspecciones de pistones',
-      'Revisión de bombas',
-      'Revisión de electroválvulas',
-      'Revisión de manómetros',
-      'Revisión de filtros'
+    acustica: [
+      'Prueba de transmisión de sonidos cardíacos', 'Prueba de transmisión de sonidos respiratorios', 'Calidad de sonido en campana',
+      'Calidad de sonido en diafragma', 'Ausencia de ruidos externos', 'Sensibilidad acústica', 'Claridad de tonos graves y agudos',
+      'Comparación con fonendoscopio de referencia', 'Detección de soplos cardíacos'
     ],
-    control: [
-      'Revisión de tarjeta de control', 'Revisión de sensores', 'Sistema de seguridad', 'Verificación de actuadores', 'Otro'
+    higiene: [
+      'Desinfección del diafragma y campana', 'Desinfección de olivas', 'Secado completo después de limpieza',
+      'Ausencia de residuos químicos'
     ],
-    neumatico: [
-      'Inspección de manómetro', 'Revisión de mangueras/tubos', 'Revisión compresor', 'Revisión de fugas', 'Revisión de control de flujo',
-      'Revisión de electroválvulas', 'Revisión de filtros', 'Revisión empaques'
+    accesorios: [
+      'Estado del estuche de transporte', 'Disponibilidad de olivas de repuesto', 'Disponibilidad de diafragma de repuesto',
+      'Etiquetas de identificación', 'Accesorios completos'
     ],
     adicionales: [
-      'Limpieza interna del equipo', 'Limpieza externa del equipo', 'Lubricación de partes si aplica', 'Inspecciones signos de corrosión',
-      'Inspección de piezas faltantes', 'Revisión dispositivos/operadores', 'Inspección de componentes con sobrecalentamiento'
+      'Limpieza externa del fonendoscopio', 'Inspección de signos de desgaste', 'Revisión de vida útil',
+      'Reemplazo de piezas desgastadas', 'Almacenamiento adecuado'
     ],
     desempeno: [
-      'Revisión de los modos de operación', 'Simulación de parámetros de entrada', 'Análisis de parámetros de salida',
-      'Verificando rango de exactitud', 'Corriente de fuga', 'Chasis (puesta a tierra) ≤ 10 μA',
-      'Chasis (sin toma a tierra) ≤ 10 μA', 'Sonda del cable ≤ 10 μA'
+      'Verificación de auscultación cardíaca', 'Verificación de auscultación pulmonar', 'Sensibilidad para sonidos graves',
+      'Sensibilidad para sonidos agudos', 'Verificación de sellado acústico', 'Comparación con estándar de calidad'
     ]
   };
 
@@ -213,32 +208,32 @@ function Fonendoscopio() {
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE FUENTE DE PODER</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>ACCESORIOS Y REPUESTOS</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.fuente.map((row, idx) => (
+                {tablas.accesorios.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`fuente_${idx}`]?.ap || false} onChange={handleActividad('fuente', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`fuente_${idx}`]?.r || false} onChange={handleActividad('fuente', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`fuente_${idx}`]?.na || false} onChange={handleActividad('fuente', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`accesorios_${idx}`]?.ap || false} onChange={handleActividad('accesorios', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`accesorios_${idx}`]?.r || false} onChange={handleActividad('accesorios', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`accesorios_${idx}`]?.na || false} onChange={handleActividad('accesorios', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE INTERFAZ DE USUARIO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE TUBULADURAS</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.interfaz.map((row, idx) => (
+                {tablas.tubuladuras.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`interfaz_${idx}`]?.ap || false} onChange={handleActividad('interfaz', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`interfaz_${idx}`]?.r || false} onChange={handleActividad('interfaz', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`interfaz_${idx}`]?.na || false} onChange={handleActividad('interfaz', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`tubuladuras_${idx}`]?.ap || false} onChange={handleActividad('tubuladuras', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`tubuladuras_${idx}`]?.r || false} onChange={handleActividad('tubuladuras', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`tubuladuras_${idx}`]?.na || false} onChange={handleActividad('tubuladuras', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -247,32 +242,32 @@ function Fonendoscopio() {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA MECÁNICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE CAMPANA Y DIAFRAGMA</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.mecanico.map((row, idx) => (
+                {tablas.campana.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.ap || false} onChange={handleActividad('mecanico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.r || false} onChange={handleActividad('mecanico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`mecanico_${idx}`]?.na || false} onChange={handleActividad('mecanico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`campana_${idx}`]?.ap || false} onChange={handleActividad('campana', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`campana_${idx}`]?.r || false} onChange={handleActividad('campana', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`campana_${idx}`]?.na || false} onChange={handleActividad('campana', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE SISTEMA HIDRÁULICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN DE OLIVAS AURICULARES</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>Resultado</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.hidraulico.map((row, idx) => (
+                {tablas.olivas.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.ap || false} onChange={handleActividad('hidraulico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.r || false} onChange={handleActividad('hidraulico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`hidraulico_${idx}`]?.na || false} onChange={handleActividad('hidraulico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`olivas_${idx}`]?.ap || false} onChange={handleActividad('olivas', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`olivas_${idx}`]?.r || false} onChange={handleActividad('olivas', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`olivas_${idx}`]?.na || false} onChange={handleActividad('olivas', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
@@ -281,32 +276,32 @@ function Fonendoscopio() {
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, marginTop: 20 }}>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN SISTEMA DE CONTROL</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>PRUEBAS ACÚSTICAS</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.control.map((row, idx) => (
+                {tablas.acustica.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.ap || false} onChange={handleActividad('control', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.r || false} onChange={handleActividad('control', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`control_${idx}`]?.na || false} onChange={handleActividad('control', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`acustica_${idx}`]?.ap || false} onChange={handleActividad('acustica', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`acustica_${idx}`]?.r || false} onChange={handleActividad('acustica', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`acustica_${idx}`]?.na || false} onChange={handleActividad('acustica', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
           <div style={{ flex: 1, minWidth: 320, background: 'white', padding: 16, borderRadius: 8, border: '1px solid #e0e6ed' }}>
-            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>VERIFICACIÓN NEUMÁTICO</h4>
+            <h4 style={{ fontSize: 14, fontWeight: 600, marginTop: 0, marginBottom: 12, textAlign: 'center', background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: 10, borderRadius: 6 }}>HIGIENE Y DESINFECCIÓN</h4>
             <table style={{ width: '100%', fontSize: 12, borderCollapse: 'collapse', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }} border="1">
               <thead><tr><th>RESULTADO</th><th>AP</th><th>R</th><th>NA</th></tr></thead>
               <tbody>
-                {tablas.neumatico.map((row, idx) => (
+                {tablas.higiene.map((row, idx) => (
                   <tr key={row}>
                     <td>{row}</td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.ap || false} onChange={handleActividad('neumatico', idx, 'ap')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.r || false} onChange={handleActividad('neumatico', idx, 'r')} /></td>
-                    <td><input type="checkbox" checked={form.actividades[`neumatico_${idx}`]?.na || false} onChange={handleActividad('neumatico', idx, 'na')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`higiene_${idx}`]?.ap || false} onChange={handleActividad('higiene', idx, 'ap')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`higiene_${idx}`]?.r || false} onChange={handleActividad('higiene', idx, 'r')} /></td>
+                    <td><input type="checkbox" checked={form.actividades[`higiene_${idx}`]?.na || false} onChange={handleActividad('higiene', idx, 'na')} /></td>
                   </tr>
                 ))}
               </tbody>

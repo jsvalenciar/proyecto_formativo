@@ -121,7 +121,13 @@ function Monitor() {
   const handleExportPDF = async () => {
     const input = formRef.current;
     if (!input) return;
-    await exportElementToPdf(input, 'reporte-monitor-signos-vitales.pdf');
+    await exportElementToPdf(input, 'reporte-monitor.pdf');
+  };
+
+  const handleSaveForm = () => {
+    // Guardar formulario en localStorage
+    localStorage.setItem('monitor_form', JSON.stringify(form));
+    alert('Formulario guardado exitosamente');
   };
 
   return (
@@ -407,8 +413,9 @@ function Monitor() {
           </div>
         </div>
       </section>
-      <div style={{ textAlign: 'center', marginTop: 30, marginBottom: 10 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginTop: 30, marginBottom: 10, flexWrap: 'wrap' }}>
         <button className="submit-btn" onClick={handleExportPDF} style={{ background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: '14px 40px', border: 'none', borderRadius: 8, fontSize: 16, fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)', transition: 'all 0.3s ease' }}>Generar PDF del Reporte</button>
+        <button className="submit-btn" onClick={handleSaveForm} style={{ background: 'white', color: '#dc3545', padding: '14px 40px', border: '2px solid #dc3545', borderRadius: 8, fontSize: 16, fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 15px rgba(220, 53, 69, 0.2)', transition: 'all 0.3s ease' }}>guardar formulario</button>
       </div>
     </div>
   );

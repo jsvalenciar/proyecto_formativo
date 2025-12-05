@@ -5,23 +5,35 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100vw;
   height: 100vh;
-  position: relative;
-  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
   margin: 0;
   padding: 0;
+  overflow: hidden;
   font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
+}
+
+.auth-wrapper *, .login-wrapper *, .register-wrapper * {
+  box-sizing: border-box;
 }
 
 .auth-container, .login-container, .register-container {
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
   border-radius: 0;
   box-shadow: none;
   overflow: hidden;
   backdrop-filter: none;
   border: none;
+  margin: 0;
+  padding: 0;
   animation: containerSlideIn 1s ease-out;
 }
 
@@ -43,6 +55,8 @@
   border-radius: 0;
   position: relative;
   overflow: hidden;
+  height: 100vh;
+  max-height: 100vh;
 }
 .left-panel::before {
   content: '';
@@ -64,6 +78,9 @@
   margin: 0 0 15px 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   animation: textGlow 2s ease-in-out infinite alternate;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 @keyframes textGlow {
   from { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); }
@@ -122,6 +139,9 @@
   padding: 50px;
   border-radius: 0;
   backdrop-filter: blur(20px);
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
 }
 /* Por defecto Register (blanco), sobreescribir en Login con clase extra si se desea */
 .right-panel {
@@ -192,14 +212,75 @@
 .input-group .icon {
   position: absolute;
   right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 15px;
   color: #667eea;
   font-size: 18px;
   transition: transform 0.3s ease;
+  z-index: 5;
 }
 .input-group input:focus + .icon {
-  transform: translateY(-50%) scale(1.1);
+  transform: scale(1.1);
+}
+
+.input-group .error-message {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 5px;
+  background: #ff9800;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.input-group .error-message::before {
+  content: '⚠️';
+  font-size: 14px;
+}
+
+.input-error {
+  border-color: #ff6b6b !important;
+  background-color: rgba(255, 107, 107, 0.05) !important;
+}
+
+/* Mensaje de error del formulario */
+.error-message {
+  background: #ff9800;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: errorSlideIn 0.3s ease-out;
+}
+
+.error-message::before {
+  content: '⚠️';
+  font-size: 16px;
+}
+
+@keyframes errorSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Botón principal de formulario */
@@ -305,37 +386,55 @@
 @media (max-width: 768px) {
   .auth-container, .login-container, .register-container {
     flex-direction: column;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
   }
   .left-panel {
     border-radius: 0;
-    padding: 30px 20px;
-    min-height: 40vh;
+    padding: 20px;
+    height: 35vh;
+    max-height: 35vh;
+    min-height: 35vh;
+    flex: none;
   }
   .right-panel {
     border-radius: 0;
-    padding: 30px 20px;
-    min-height: 60vh;
+    padding: 20px;
+    height: 65vh;
+    max-height: 65vh;
+    min-height: 65vh;
+    flex: none;
     overflow-y: auto;
   }
   .left-panel h1 {
     font-size: 20px;
+    margin-bottom: 10px;
   }
   .left-panel p {
     font-size: 14px;
+    margin-bottom: 20px;
+  }
+  .auth-form, .login-form, .register-form {
+    padding: 30px 20px;
+    max-width: 100%;
   }
   .auth-form h2, .login-form h2, .register-form h2 {
     font-size: 20px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
+  }
+  .input-group {
+    margin-bottom: 15px;
   }
   .input-group input {
-    padding: 12px 15px;
+    padding: 12px 36px 12px 12px;
     font-size: 14px;
   }
   .login-btn, .register-btn {
     padding: 12px 25px;
     font-size: 14px;
+    margin: 20px 0;
   }
 }
 @media (max-width: 480px) {
@@ -343,17 +442,43 @@
     flex-direction: column;
   }
   .left-panel {
-    padding: 20px 15px;
+    padding: 15px;
+    height: 30vh;
+    max-height: 30vh;
     min-height: 30vh;
   }
   .right-panel {
-    padding: 20px 15px;
+    padding: 15px;
+    height: 70vh;
+    max-height: 70vh;
     min-height: 70vh;
   }
   .left-panel h1 {
     font-size: 18px;
+    margin-bottom: 8px;
+  }
+  .left-panel p {
+    font-size: 13px;
+    margin-bottom: 15px;
   }
   .auth-form, .login-form, .register-form {
     max-width: 100%;
+    padding: 25px 15px;
+  }
+  .auth-form h2, .login-form h2, .register-form h2 {
+    font-size: 18px;
+    margin-bottom: 18px;
+  }
+  .input-group {
+    margin-bottom: 12px;
+  }
+  .input-group input {
+    padding: 10px 32px 10px 10px;
+    font-size: 13px;
+  }
+  .login-btn, .register-btn {
+    padding: 10px 20px;
+    font-size: 13px;
+    margin: 15px 0;
   }
 }

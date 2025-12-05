@@ -6,8 +6,8 @@ const Register = () => {
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
-    password: '',
-    confirmPassword: ''
+    contacto: '',
+    ciudad: ''
   });
   const navigate = useNavigate();
 
@@ -18,11 +18,11 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert('Las contraseñas no coinciden');
+    if (!formData.nombre || !formData.email || !formData.contacto || !formData.ciudad) {
+      alert('Por favor completa todos los campos');
       return;
     }
-    if (formData.nombre && formData.email && formData.password) {
+    if (formData.nombre && formData.email && formData.contacto && formData.ciudad) {
       navigate('/');
     }
   };
@@ -31,9 +31,9 @@ const Register = () => {
     <div className="register-wrapper">
       <div className="register-container">
         <div className="left-panel">
-          <h1>¡Crea tu cuenta!</h1>
-          <p>¿Ya tienes una cuenta?</p>
-          <Link to="/" className="login-btn">Inicia Sesión</Link>
+          <h1>¡INGRESA TUS DATOS PERSONALES!</h1>
+          <p>Nos contactaremos prontamente contigo ...</p>
+          <Link to="/" className="login-btn">Inicio de sesión ⬅️</Link>
         </div>
 
         <div className="right-panel">
@@ -66,38 +66,31 @@ const Register = () => {
 
             <div className="input-group">
               <input
-                type="password"
-                name="password"
-                placeholder="Contraseña"
-                value={formData.password}
+                type="tel"
+                name="contacto"
+                placeholder="Número de Contacto"
+                value={formData.contacto}
                 onChange={handleChange}
                 required
               />
-              <span className="icon">🔒</span>
+              <span className="icon">📞</span>
             </div>
 
             <div className="input-group">
               <input
-                type="password"
-                name="confirmPassword"
-                placeholder="Confirmar Contraseña"
-                value={formData.confirmPassword}
+                type="text"
+                name="ciudad"
+                placeholder="Ciudad"
+                value={formData.ciudad}
                 onChange={handleChange}
                 required
               />
-              <span className="icon">🔒</span>
+              <span className="icon">🏙️</span>
             </div>
 
             <button type="submit" className="register-btn">Registrarse</button>
 
-            <div className="social-register">
-              <p>o registrarse con redes sociales</p>
-              <div className="social-icons">
-                <div className="icon-box">G</div>
-                <div className="icon-box">f</div>
-                <div className="icon-box">🐙</div>
-              </div>
-            </div>
+            
           </form>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../assets/css/Home.css';
+import '../assets/css/Clientes.css';
 
 function Clientes() {
   const [clientes, setClientes] = useState([]);
@@ -98,30 +99,19 @@ function Clientes() {
         <p className="hero-subtitle">Administración de clientes y empresas</p>
       </div>
 
-      <div style={{ maxWidth: 1200, margin: '40px auto', padding: '0 20px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 30 }}>
-          <h2 style={{ fontSize: 24, fontWeight: 600, color: '#2c3e50' }}>Lista de Clientes</h2>
+      <div className="clientes-container">
+        <div className="clientes-header">
+          <h2 className="clientes-title">Lista de Clientes</h2>
           <button 
             onClick={() => setMostrarFormulario(!mostrarFormulario)}
-            style={{
-              background: 'linear-gradient(135deg, #667eea, #764ba2)',
-              color: 'white',
-              padding: '12px 24px',
-              border: 'none',
-              borderRadius: 8,
-              fontSize: 16,
-              fontWeight: 600,
-              cursor: 'pointer',
-              boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)',
-              transition: 'all 0.3s ease'
-            }}
+            className="btn-nuevo-cliente"
           >
             {mostrarFormulario ? '❌ Cancelar' : '➕ Nuevo Cliente'}
           </button>
         </div>
 
         {mostrarFormulario && (
-          <div style={{
+          <div className="formulario-cliente" style={{
             background: '#f8f9fa',
             padding: 30,
             borderRadius: 12,
@@ -336,82 +326,100 @@ function Clientes() {
             </p>
           </div>
         ) : (
-          <div style={{
-            background: 'white',
-            borderRadius: 12,
-            overflow: 'hidden',
-            boxShadow: '0 2px 10px rgba(0,0,0,0.08)'
-          }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-              <thead>
-                <tr style={{ background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white' }}>
-                  <th style={{ padding: '14px 16px', textAlign: 'left', fontWeight: 600, fontSize: 14 }}>Nombre / Razón Social</th>
-                  <th style={{ padding: '14px 16px', textAlign: 'left', fontWeight: 600, fontSize: 14 }}>Tipo Doc.</th>
-                  <th style={{ padding: '14px 16px', textAlign: 'left', fontWeight: 600, fontSize: 14 }}>Documento</th>
-                  <th style={{ padding: '14px 16px', textAlign: 'left', fontWeight: 600, fontSize: 14 }}>Teléfono</th>
-                  <th style={{ padding: '14px 16px', textAlign: 'left', fontWeight: 600, fontSize: 14 }}>Email</th>
-                  <th style={{ padding: '14px 16px', textAlign: 'center', fontWeight: 600, fontSize: 14 }}>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clientes.map((cliente, index) => (
-                  <tr key={cliente.id} style={{
-                    borderBottom: '1px solid #f0f0f0',
-                    background: index % 2 === 0 ? '#fff' : '#f8f9fa',
-                    transition: 'background 0.2s'
-                  }}>
-                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#2c3e50', fontWeight: 500 }}>{cliente.nombreCompleto}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#2c3e50' }}>
-                      <span style={{ 
-                        background: '#667eea', 
-                        color: 'white', 
-                        padding: '4px 8px', 
-                        borderRadius: 4, 
-                        fontSize: 12,
-                        fontWeight: 600
-                      }}>
-                        {cliente.tipoDocumento}
-                      </span>
-                    </td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#2c3e50' }}>{cliente.numeroDocumento}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#2c3e50' }}>{cliente.telefono}</td>
-                    <td style={{ padding: '14px 16px', fontSize: 14, color: '#2c3e50' }}>{cliente.email}</td>
-                    <td style={{ padding: '14px 16px', textAlign: 'center' }}>
-                      <button
-                        onClick={() => editarCliente(cliente)}
-                        style={{
-                          background: '#3498db',
-                          color: 'white',
-                          border: 'none',
-                          padding: '6px 12px',
-                          borderRadius: 4,
-                          fontSize: 13,
-                          cursor: 'pointer',
-                          marginRight: 8
-                        }}
-                      >
-                        ✏️ Editar
-                      </button>
-                      <button
-                        onClick={() => eliminarCliente(cliente.id)}
-                        style={{
-                          background: '#e74c3c',
-                          color: 'white',
-                          border: 'none',
-                          padding: '6px 12px',
-                          borderRadius: 4,
-                          fontSize: 13,
-                          cursor: 'pointer'
-                        }}
-                      >
-                        🗑️ Eliminar
-                      </button>
-                    </td>
+          <>
+            {/* Vista de tabla para desktop */}
+            <div className="tabla-clientes-wrapper">
+              <table className="tabla-clientes">
+                <thead>
+                  <tr>
+                    <th>Nombre / Razón Social</th>
+                    <th>Tipo Doc.</th>
+                    <th>Documento</th>
+                    <th>Teléfono</th>
+                    <th style={{ textAlign: 'center' }}>Acciones</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {clientes.map((cliente) => (
+                    <tr key={cliente.id}>
+                      <td style={{ fontWeight: 500 }}>{cliente.nombreCompleto}</td>
+                      <td>
+                        <span className="tipo-doc-badge">
+                          {cliente.tipoDocumento}
+                        </span>
+                      </td>
+                      <td>{cliente.numeroDocumento}</td>
+                      <td>{cliente.telefono}</td>
+                      <td>
+                        <div className="acciones-buttons">
+                          <button
+                            onClick={() => editarCliente(cliente)}
+                            className="btn-editar"
+                          >
+                            ✏️ Editar
+                          </button>
+                          <button
+                            onClick={() => eliminarCliente(cliente.id)}
+                            className="btn-eliminar"
+                          >
+                            🗑️ Eliminar
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Vista de tarjetas para móvil */}
+            <div className="clientes-cards">
+              {clientes.map((cliente) => (
+                <div key={cliente.id} className="cliente-card">
+                  <div className="cliente-card-header">
+                    <div>
+                      <h3 className="cliente-card-nombre">{cliente.nombreCompleto}</h3>
+                      <span className="tipo-doc-badge">{cliente.tipoDocumento}</span>
+                    </div>
+                  </div>
+                  <div className="cliente-card-row">
+                    <span className="cliente-card-label">Documento:</span>
+                    <span className="cliente-card-value">{cliente.numeroDocumento}</span>
+                  </div>
+                  <div className="cliente-card-row">
+                    <span className="cliente-card-label">Teléfono:</span>
+                    <span className="cliente-card-value">{cliente.telefono}</span>
+                  </div>
+                  <div className="cliente-card-row">
+                    <span className="cliente-card-label">Email:</span>
+                    <span className="cliente-card-value">{cliente.email}</span>
+                  </div>
+                  <div className="cliente-card-row">
+                    <span className="cliente-card-label">Dirección:</span>
+                    <span className="cliente-card-value">{cliente.direccion}</span>
+                  </div>
+                  <div className="cliente-card-row" style={{ border: 'none' }}>
+                    <span className="cliente-card-label">Departamento:</span>
+                    <span className="cliente-card-value">{cliente.departamento}</span>
+                  </div>
+                  <div className="cliente-card-actions">
+                    <button
+                      onClick={() => editarCliente(cliente)}
+                      className="btn-editar"
+                    >
+                      ✏️ Editar
+                    </button>
+                    <button
+                      onClick={() => eliminarCliente(cliente.id)}
+                      className="btn-eliminar"
+                    >
+                      🗑️ Eliminar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
 
         <div style={{ marginTop: 30, textAlign: 'center' }}>

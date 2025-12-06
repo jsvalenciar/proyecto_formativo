@@ -23,6 +23,7 @@ const Register = () => {
       return;
     }
     if (formData.nombre && formData.email && formData.contacto && formData.ciudad) {
+      alert('registro enviado, proto atenderemos su solicitud');
       navigate('/');
     }
   };
@@ -88,7 +89,7 @@ const Register = () => {
               <span className="icon">🏙️</span>
             </div>
 
-            <button type="submit" className="register-btn">Registrarse</button>
+            <button type="submit" className="register-btn">Enviar</button>
 
             
           </form>

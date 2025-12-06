@@ -158,6 +158,11 @@ function Pulsoximetro() {
     await exportElementToPdf(input, 'reporte-pulsoximetro.pdf');
   };
 
+  const handleSaveForm = () => {
+    localStorage.setItem('pulsoximetro_form', JSON.stringify(form));
+    alert('Formulario guardado exitosamente');
+  };
+
   return (
     <div className="formato" ref={formRef} style={{ background: '#fff', color: '#222', padding: 0, borderRadius: 0, maxWidth: '100%', margin: 0, boxShadow: 'none' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #667eea', paddingBottom: 16, marginBottom: 24, marginTop: 20 }}>
@@ -435,8 +440,9 @@ function Pulsoximetro() {
           </div>
         </div>
       </section>
-      <div style={{ textAlign: 'center', marginTop: 30, marginBottom: 10 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginTop: 30, marginBottom: 10, flexWrap: 'wrap' }}>
         <button className="submit-btn" onClick={handleExportPDF} style={{ background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: '14px 40px', border: 'none', borderRadius: 8, fontSize: 16, fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)', transition: 'all 0.3s ease' }}>Generar PDF del Reporte</button>
+        <button className="submit-btn" onClick={handleSaveForm} style={{ background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: '14px 40px', border: 'none', borderRadius: 8, fontSize: 16, fontWeight: 600, cursor: 'pointer', boxShadow: '0 4px 15px rgba(102, 126, 234, 0.3)', transition: 'all 0.3s ease' }}>guardar formulario</button>
       </div>
     </div>
   );

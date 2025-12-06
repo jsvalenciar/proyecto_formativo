@@ -1,7 +1,7 @@
 /* Auth.css: Unificación de estilos para Login y Register */
 
 /* Wrapper y contenedores */
-.auth-wrapper, .login-wrapper, .register-wrapper {
+.login-wrapper, .register-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,11 +17,11 @@
   box-sizing: border-box;
 }
 
-.auth-wrapper *, .login-wrapper *, .register-wrapper * {
+.login-wrapper *, .register-wrapper * {
   box-sizing: border-box;
 }
 
-.auth-container, .login-container, .register-container {
+.login-container, .register-container {
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -130,7 +130,7 @@
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
 }
 
-/* Panel derecho: fondo blanco para Register, gradiente para Login */
+/* Panel derecho */
 .right-panel {
   flex: 1;
   display: flex;
@@ -142,17 +142,11 @@
   height: 100vh;
   max-height: 100vh;
   overflow-y: auto;
-}
-/* Por defecto Register (blanco), sobreescribir en Login con clase extra si se desea */
-.right-panel {
   background: rgba(255, 255, 255, 0.95);
-}
-.right-panel.login {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 /* Formulario */
-.auth-form, .login-form, .register-form {
+.login-form, .register-form {
   width: 100%;
   max-width: 320px;
   background: rgba(255, 255, 255, 0.95);
@@ -161,7 +155,7 @@
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 }
-.auth-form h2, .login-form h2, .register-form h2 {
+.login-form h2, .register-form h2 {
   text-align: center;
   color: #2c3e50;
   font-size: 28px;
@@ -170,7 +164,7 @@
   position: relative;
   margin-top: 0;
 }
-.auth-form h2::after, .login-form h2::after, .register-form h2::after {
+.login-form h2::after, .register-form h2::after {
   content: '';
   position: absolute;
   bottom: -10px;
@@ -220,35 +214,6 @@
 }
 .input-group input:focus + .icon {
   transform: scale(1.1);
-}
-
-.input-group .error-message {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  margin-top: 5px;
-  background: #ff9800;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  z-index: 10;
-  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.input-group .error-message::before {
-  content: '⚠️';
-  font-size: 14px;
-}
-
-.input-error {
-  border-color: #ff6b6b !important;
-  background-color: rgba(255, 107, 107, 0.05) !important;
 }
 
 /* Mensaje de error del formulario */
@@ -319,11 +284,11 @@
 }
 
 /* Sección social */
-.social-login, .social-register {
+.social-login {
   text-align: center;
   margin-top: 25px;
 }
-.social-login p, .social-register p {
+.social-login p {
   font-size: 14px;
   color: #7f8c8d;
   margin-bottom: 20px;
@@ -379,7 +344,7 @@
   .left-panel h1 {
     font-size: 28px;
   }
-  .auth-form h2, .login-form h2, .register-form h2 {
+  .login-form h2, .register-form h2 {
     font-size: 24px;
   }
 }
@@ -416,11 +381,11 @@
     font-size: 14px;
     margin-bottom: 20px;
   }
-  .auth-form, .login-form, .register-form {
+  .login-form, .register-form {
     padding: 30px 20px;
     max-width: 100%;
   }
-  .auth-form h2, .login-form h2, .register-form h2 {
+  .login-form h2, .register-form h2 {
     font-size: 20px;
     margin-bottom: 20px;
   }
@@ -461,11 +426,11 @@
     font-size: 13px;
     margin-bottom: 15px;
   }
-  .auth-form, .login-form, .register-form {
+  .login-form, .register-form {
     max-width: 100%;
     padding: 25px 15px;
   }
-  .auth-form h2, .login-form h2, .register-form h2 {
+  .login-form h2, .register-form h2 {
     font-size: 18px;
     margin-bottom: 18px;
   }
